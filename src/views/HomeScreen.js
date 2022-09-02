@@ -13,7 +13,7 @@ const HomeScreen = ({ navigation }) => {
     return (
       <View >
         <Button
-          title="Go to First Screen"
+          title="Go to first Screen"
           onPress={() =>
             navigation.navigate('FirstScreen')
           }
@@ -24,7 +24,15 @@ const HomeScreen = ({ navigation }) => {
             navigation.navigate('StatsScreen')
           }
         />
+        <Button
+          title="Go to Form Screen"
+          onPress={() =>
+            navigation.navigate('FormScreen')
+          }
+        />
       </View>
+
+      
     );
   };
 

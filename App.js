@@ -38,6 +38,9 @@ import SecondScreen from './src/views/SecondScreen.js';
 
 import StatsScreen from './src/views/StatsScreen.js';
 
+import FormScreen from './src/views/FormScreen.js';
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -48,9 +51,11 @@ const App: () => Node = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="HomeScreen">
         <Stack.Screen name="HomeScreen" component={HomeScreen} options ={{title: 'MyHome'}}/>
-        <Stack.Screen name="FirstScreen" component={FirstScreen} options={{title : 'A first screen'}}/>
+        <Stack.Screen name="FirstScreen" component={FirstScreen} options={{title : 'First screen'}}/>
         <Stack.Screen name = "SecondScreen" component = {SecondScreen} options = {{title : 'Https Request'}}/>
         <Stack.Screen name= "StatsScreen" component ={StatsScreen} options = {{title : "Charts"}}/>
+        <Stack.Screen name= "FormScreen" component ={FormScreen} options = {{title : "Form"}}/>
+
       </Stack.Navigator>
     </NavigationContainer>
    
