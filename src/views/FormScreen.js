@@ -6,20 +6,46 @@ import {
     View, 
     TextInput, 
     Button,
-    Text } from 'react-native';
+    Text,
+    FlatList,
+    ActivityIndicator } from 'react-native';
 import { 
     useForm, Controller } from 'react-hook-form';
 
 const FormScreen = () => {
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-          firstName: '',
-          lastName: ''
+          email : '',
+          login: ''
         }
       });
       const [text, setText] = useState('');
-      const onSubmit = data => setText("Hello "+ data.firstName+" "+data.lastName+" !");
-    
+      const [isLoading, setLoading] = useState(true);
+      const onSubmit = data => sendRequest(data);
+      const [respData, setRespData] = useState('');
+      
+      
+      
+      const sendRequest = async (data) => {
+        try{
+            const resp = await fetch("https://myskilou.com/php/connexion.php", {
+                method: 'POST',
+                headers: {'Content-Type':'application/x-www-form-urlencoded'},
+                body: "inputEmail="+data.email+"&inputPassword="+data.password
+            });
+            respd = await resp.text();
+            setRespData(respd);
+        }
+        catch(error){
+            console.error(error);
+        }
+       finally {
+        setLoading(false);
+      }
+        
+      };
+
+
       return (
         <View>
           <Controller
@@ -29,15 +55,15 @@ const FormScreen = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-              placeholder='firstName'
+              placeholder='email'
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
               />
             )}
-            name="firstName"
+            name="email"
           />
-          {errors.firstName && <Text>This is required.</Text>}
+          {errors.username && <Text>required field</Text>}
     
           <Controller
             control={control}
@@ -46,17 +72,25 @@ const FormScreen = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-              placeholder='lastName'
+                placeholder='password'
+                secureTextEntry={true}
                 onBlur={onBlur}
+
                 onChangeText={onChange}
                 value={value}
               />
             )}
-            name="lastName"
+            name="password"
           />
+          {errors.password && <Text>required field</Text>}
+
     
-          <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+          <Button title="Login" onPress={handleSubmit(onSubmit)} />
           <Text>{text}</Text>
+
+          
+          {isLoading ? <ActivityIndicator/> : (<Text>{respData}</Text>
+        )}
         </View>
       );
       };
